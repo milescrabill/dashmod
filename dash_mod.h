@@ -6,10 +6,12 @@
 class DashMod : public DashBot {
 public:
   int auto_flag;
+  int baseline_ambient;
   
-  void dashBump();
+  void dashStopAmbient(void);
   boolean detectCollisionLeft(int);
   boolean detectCollisionRight(int);
+  boolean detectCollisionAmbient(int);
 };
 
 #endif
