@@ -9,6 +9,11 @@ public:
   int baseline_ambient;
   
   void dashStopAmbient(void);
+  void dashStopIR(void);
+  void dashBump(void);
+  
+  void setEyesIR(void);
+  
   boolean detectCollisionLeft(int);
   boolean detectCollisionRight(int);
   boolean detectCollisionAmbient(int);
