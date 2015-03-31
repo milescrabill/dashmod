@@ -12,12 +12,9 @@ DashMod myrobot; //gyro, motors, controller, LEDs, eyes
 void setup() {
   myrobot.auto_flag = 1;
   myrobot.dashRadioSetup();
-//  myrobot.dashBump();
-//  pinMode(A0, INPUT);
+  myrobot.dashStopFlex();
 }
 
 void loop(){
-  Serial.println(analogRead(A5));
-  delay(200);
   myrobot.dashPacketHandler();
 }

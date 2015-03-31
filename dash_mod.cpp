@@ -140,11 +140,59 @@ boolean DashMod::detectCollisionRight(int thresh)
   }
 }
 
-//// detects a collision on the left side of the robot by comparing current IR reading to the baseline
+//// detects a collision on the left side of the robot by comparing current ambient light reading to the baseline
 //// takes a threshold variable as an input to set sensitivity
 boolean DashMod::detectCollisionAmbient(int thresh)
 {
   if (readAmbientLight() < baseline_ambient - thresh) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+void DashMod::dashStopFlex(){  
+  baseline_flex = readFlex();
+  
+  unsigned long init_time = millis();
+  unsigned long current_time = millis();
+  
+  setEyeColor(100, 0, 0);
+
+  // auto_flag must be 1, if not, an all stop has been called and the auto mode should exit
+  while (millis() - init_time < 20000 && auto_flag == 1){
+    dashRun(40,0);    
+    current_time = millis();
+    while (millis()-current_time < 50) {}
+//    setEyeColor(0, 0, 100);
+    dashPacketHandler(); // listen for other commands
+
+    // detect collision checks (flex < baseline - thresh)
+    if (detectCollisionFlex(baseline_flex * .25)) {
+      unsigned long bump_time = millis();
+
+      // stop
+      while (millis() - bump_time < 2000 && auto_flag == 1) {
+        setEyeColor(100, 0, 100);
+        allStop();
+        //dashPacketHandler();
+      }
+    }
+  }
+  allStop();
+  setEyeColor(100, 0, 0);
+}
+
+// we have our flex sensor plugged into A5
+int DashMod::readFlex() {
+  return analogRead(A5);
+}
+
+//// detects a collision on the left side of the robot by comparing current flex sensor reading to the baseline
+//// takes a threshold variable as an input to set sensitivity
+boolean DashMod::detectCollisionFlex(int thresh)
+{
+  if (readFlex() < baseline_flex - thresh) {
     return true;
   } else {
     return false;
