@@ -13,6 +13,7 @@ public:
   void dashStopIR(void);
   void dashBump(void);
   void dashStopFlex(void);
+  void dashBumpFlex(void);
   
   void setEyesIR(void);
   int readFlex(void);

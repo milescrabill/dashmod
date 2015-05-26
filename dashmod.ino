@@ -12,9 +12,9 @@ DashMod myrobot; //gyro, motors, controller, LEDs, eyes
 void setup() {
   myrobot.auto_flag = 1;
   myrobot.dashRadioSetup();
-  myrobot.dashStopFlex();
+  myrobot.dashBumpFlex();
 }
 
-void loop(){
+void loop() {
   myrobot.dashPacketHandler();
 }
